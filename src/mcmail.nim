@@ -1,5 +1,5 @@
-import mcmail/sendMail
+import mcmail/sendMessage
 
 ## sendMail provides the types and procedure for sending text and html messages
 ## 
-export sendMail
+export sendMessage
