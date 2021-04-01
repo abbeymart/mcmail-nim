@@ -1,9 +1,10 @@
-import tables, smtp
+import smtp
+import tables
 import mcresponse
 
 # types
 type
-    EmailConfigType* = object 
+    EmailConfigType* = object
         username*: string
         password*: string
         port*: int
@@ -11,6 +12,13 @@ type
         msgFrom*: string
         apiKey*: string
         tls*: bool
+
+    EmailMessage* = object
+        msgTo*: seq[string]
+        msgCc*: seq[string]
+        msgSubject*: string
+        msgOtherHeaders*: Table[string, string]
+        msgBody*: string
 
     EmailPropsType* = Table[string, string]
 
@@ -28,9 +36,16 @@ type
     MessageObjectType* = Table[string, string]
 
 # SendEmail sends text and html messages, attachment etc.
-proc sendEmail*(mailer: EmailConfigType; params: Message; emailType = "text"): ResponseMessage = 
+proc sendMessage*(mailer: EmailConfigType; params: EmailMessage; emailType = "text"): ResponseMessage = 
     try:
         # TODO: configure and send-mail
+
+        var msg = createMessage(params.msgSubject, params.msgBody, params.msgTo)
+
+        let smtpConn = newSmtp(useSsl = mailer.tls, debug=true)
+        smtpConn.connect(mailer.serverUrl, Port mailer.port)
+        smtpConn.auth("username", "password")
+        smtpConn.sendMail("username@gmail.com", @["foo@gmail.com"], $msg)
 
         result = getResMessage("success", ResponseMessage(
             message: "Email successfully sent",
