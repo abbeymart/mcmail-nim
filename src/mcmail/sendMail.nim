@@ -1,4 +1,4 @@
-import tables
+import tables, smtp
 import mcresponse
 
 # types
@@ -28,7 +28,7 @@ type
     MessageObjectType* = Table[string, string]
 
 # SendEmail sends text and html messages, attachment etc.
-proc sendEmail*(mailer: EmailConfigType; recipients: seq[string]; message: string; subject: string; emailType: string): ResponseMessage = 
+proc sendEmail*(mailer: EmailConfigType; params: Message; emailType = "text"): ResponseMessage = 
     try:
         # TODO: configure and send-mail
 
