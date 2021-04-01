@@ -10,3 +10,4 @@ srcDir        = "src"
 # Dependencies
 
 requires "nim >= 1.4.4"
+requires "mcresponse >= 0.1.1"
