@@ -1,4 +1,4 @@
-import unittest
+import unittest, strutils
 import mcmail
 import ../config/secure/testData
 
@@ -11,7 +11,7 @@ let mailer = EmailConfigType(
   password: emailPass,
   serverUrl: emailServer,
   port: emailPort,
-  msgFrom: emailFrom,
+  msgFrom: msgFrom,
 )
 
 let emailMsg = EmailMessage(

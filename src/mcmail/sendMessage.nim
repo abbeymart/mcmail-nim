@@ -43,7 +43,7 @@ proc sendEmail*(mailer: EmailConfigType; params: EmailMessage; emailType = "text
         let smtpConn = newSmtp(useSsl = mailer.tls, debug=true)
         smtpConn.connect(mailer.serverUrl, Port mailer.port)
         smtpConn.auth(mailer.username, mailer.password)
-        smtpConn.sendMail(mailer.msgFrom, mailer.msgTo, $msg)
+        smtpConn.sendMail(mailer.msgFrom, params.msgTo, $msg)
 
         result = getResMessage("success", ResponseMessage(
             message: "Email successfully sent",
