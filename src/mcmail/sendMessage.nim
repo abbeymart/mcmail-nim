@@ -45,13 +45,13 @@ proc sendEmail*(mailer: EmailConfigType; params: EmailMessage; emailType = "text
         smtpConn.auth(mailer.username, mailer.password)
         smtpConn.sendMail(mailer.msgFrom, params.msgTo, $msg)
 
-        result = getResMessage("success", ResponseMessage(
+        result = getResMessage(SuccessCode, ResponseMessage(
             message: "Email successfully sent",
             value: nil
         ))
     except:
         echo "Unable to send email message: " & getCurrentExceptionMsg()
-        result = getResMessage("sendmailError", ResponseMessage(
+        result = getResMessage(ConnectionErrorCode, ResponseMessage(
             message: "Unable to send email message:" & getCurrentExceptionMsg(),
             value: nil
         ))
